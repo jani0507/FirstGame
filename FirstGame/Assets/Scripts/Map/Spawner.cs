@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public bool devMode;   
+
     public Wave[] waves;
     public Enemy enemy;
 
@@ -59,9 +61,20 @@ public class Spawner : MonoBehaviour
                 enemiesRemainingToSpawn--;
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
-                StartCoroutine(SpawnEnemy());
+                StartCoroutine("SpawnEnemy");
             }
         }
+        if(devMode)
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                StopCoroutine("SpawnEnemy");
+                foreach(Enemy enemy in FindObjectsOfType<Enemy>())
+                {
+                    GameObject.Destroy(enemy.gameObject);
+                }
+                NextWave();
+            }
+
     }
 
     IEnumerator SpawnEnemy()
@@ -75,7 +88,7 @@ public class Spawner : MonoBehaviour
             spawnTile = map.GettileFromPos(playerT.position);
         }
         Material tileMat = spawnTile.GetComponent<Renderer>().material;
-        Color initialColor = tileMat.color;
+        Color initialColor = Color.white;
         Color flashColor = Color.red;
         float spawnTimer = 0;
 
