@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-[RequireComponent (typeof(NavMeshAgent))]
+
+[RequireComponent (typeof(UnityEngine.AI.NavMeshAgent))]
 public class Enemy : LivingEntity
 {
     public enum State { Idle, Chasing, Attacking };
@@ -12,7 +12,7 @@ public class Enemy : LivingEntity
 
     public ParticleSystem deathEffect;
 
-    NavMeshAgent pathfinder;
+    UnityEngine.AI.NavMeshAgent pathfinder;
     Transform target;
     LivingEntity targetEntity;
     Material skinMaterial;
@@ -31,7 +31,7 @@ public class Enemy : LivingEntity
 
     private void Awake()
     {
-        pathfinder = GetComponent<NavMeshAgent>();
+        pathfinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
@@ -68,7 +68,7 @@ public class Enemy : LivingEntity
         }
         startingHealth = enemyHealth;
 
-        skinMaterial = GetComponent<Renderer>().material;
+        skinMaterial = GetComponent<Renderer>().sharedMaterial;
         skinMaterial.color = skinColor;
         originalColor = skinMaterial.color;
     }
