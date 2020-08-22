@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -12,18 +13,35 @@ public class GameUI : MonoBehaviour
     public RectTransform newWaveBanner;
     public Text newWaveTitle;
     public Text newWaveEnemyCount;
+    public Text scoreUI;
+    public Text gameoverscoreUI;
+    public RectTransform healthBar;
 
     Spawner spawner;
+    Player player;
 
     void Start()
     {
-        FindObjectOfType<Player>().OnDeath += OnGameOver;
+        player = FindObjectOfType<Player>();
+        player.OnDeath += OnGameOver;
     }
 
     void Awake()
     {
         spawner = FindObjectOfType<Spawner>();
         spawner.OnNewWave += OnNewWave;
+    }
+
+    private void Update()
+    {
+        scoreUI.text = ScoreKeeper.score.ToString("D6");
+        float healthPercent = 0;
+        if (player != null)
+        {
+            healthPercent = player.health / player.startingHealth;          
+        }
+
+        healthBar.localScale = new Vector3(healthPercent, 1, 1);
     }
 
     void OnNewWave(int waveNumber)
@@ -39,7 +57,11 @@ public class GameUI : MonoBehaviour
 
    void OnGameOver()
    {
-        StartCoroutine(Fade(Color.clear, Color.black, 1));
+        Cursor.visible = true;
+        StartCoroutine(Fade(Color.clear, new Color(0,0,0,.95f), 1));
+        gameoverscoreUI.text = scoreUI.text;
+        scoreUI.gameObject.SetActive(false);
+        healthBar.transform.parent.gameObject.SetActive(false);
         gameOverUI.SetActive(true);
    }
 
@@ -86,6 +108,11 @@ public class GameUI : MonoBehaviour
     //UI Input
     public void StatrNewGame()
     {
-        Application.LoadLevel("Game");
+        SceneManager.LoadScene("Game");
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }
