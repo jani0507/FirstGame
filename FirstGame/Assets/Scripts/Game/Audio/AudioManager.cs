@@ -6,9 +6,9 @@ public class AudioManager : MonoBehaviour
 {
     public enum AudioChannel {Master, Sfx, Music };
 
-    float masterVolPercent = .2f;
-    float sfxVolPercent = 1;
-    float musicVolPercent = 1;
+    public float masterVolPercent { get; private set; }
+    public float sfxVolPercent { get; private set; }
+    public float musicVolPercent { get; private set; }
 
     AudioSource sfx2DSource;
     AudioSource[] musicSources;
@@ -46,11 +46,15 @@ public class AudioManager : MonoBehaviour
             newSfx2DSource.transform.parent = transform;
 
             audioListener = FindObjectOfType<AudioListener>().transform;
-            playerT = FindObjectOfType<Player>().transform;
+            if (FindObjectOfType<Player>() != null)
+            {
+                playerT = FindObjectOfType<Player>().transform;
+            }
 
-            masterVolPercent = PlayerPrefs.GetFloat("master vol", masterVolPercent);
-            sfxVolPercent = PlayerPrefs.GetFloat("sfx vol", sfxVolPercent);
-            musicVolPercent = PlayerPrefs.GetFloat("music vol", musicVolPercent);
+            masterVolPercent = PlayerPrefs.GetFloat("master vol", 1);
+            sfxVolPercent = PlayerPrefs.GetFloat("sfx vol", 1);
+            musicVolPercent = PlayerPrefs.GetFloat("music vol", 1);
+            PlayerPrefs.Save();
         }
     }
 
