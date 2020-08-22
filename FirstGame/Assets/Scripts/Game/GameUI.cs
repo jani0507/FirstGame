@@ -29,7 +29,7 @@ public class GameUI : MonoBehaviour
     void OnNewWave(int waveNumber)
     {
         string[] numbers = { "One", "Two", "Three", "Four", "Five" };
-        newWaveTitle.text = "- Wave" + numbers[waveNumber - 1] + " -";
+        newWaveTitle.text = "- Wave " + numbers[waveNumber - 1] + " -";
         string enemyCountString = ((spawner.waves[waveNumber - 1].infinite) ? "Inifinite" : spawner.waves[waveNumber - 1].enemyCount + "");
         newWaveEnemyCount.text = "Enemies: " + enemyCountString;
 
@@ -65,7 +65,7 @@ public class GameUI : MonoBehaviour
                 }
             }
 
-            newWaveBanner.anchoredPosition = Vector2.up * Mathf.Lerp(-220, 45, animatePercent);
+            newWaveBanner.anchoredPosition = Vector2.up * Mathf.Lerp(-223, 25, animatePercent);
             yield return null;
         }
     }

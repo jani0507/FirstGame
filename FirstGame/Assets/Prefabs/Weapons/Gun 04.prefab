@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81110edcb964c634c9501aba4597a44a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireMode: 0
+  fireMode: 1
   projectileSpawn:
   - {fileID: 7362393088076039680}
   projectile: {fileID: 3077079178334645206, guid: bf68fe1537dbeef40b9fd7b9cf98c43d, type: 3}
